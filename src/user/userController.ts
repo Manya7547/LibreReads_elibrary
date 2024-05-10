@@ -2,6 +2,8 @@ import { Express, Request, Response, NextFunction } from "express"
 import createHttpError from "http-errors";
 import userModel from "./userModel";
 import bcrypt from 'bcrypt';
+import { sign } from "jsonwebtoken";
+import { config } from "../config/config";
 
 
 const createUser =async (
@@ -29,11 +31,23 @@ const createUser =async (
         // hash password 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        const newUser = await userModel.create({
+            name, 
+            email,
+            password: hashedPassword,
+        });
+
+        //token generation - JWT token 
+        const token = sign({sub: newUser._id}, config.jwtSecret as string, {
+            expiresIn: '7d',
+            algorithm: 'HS256',
+        });
+
         //process or logic 
 
         //response
 
-        res.json({message:"user created"});
+        res.json({accessToken: token});
     };
 
 export {createUser};
