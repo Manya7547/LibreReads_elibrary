@@ -1,0 +1,22 @@
+{
+  "name": "elibrary",
+  "version": "1.0.0",
+  "description": "api project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "express"
+  ],
+  "author": "Manya S <manya7547@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.11",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
