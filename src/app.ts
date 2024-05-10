@@ -7,6 +7,7 @@ import globalErrorHandler from './middlewares/globalErrorHandler';
 import userRouter from './user/userRouter';
 
 const app = express();
+app.use(express.json());
 
 
 //Routes or URLs
