@@ -67,4 +67,38 @@ const createUser =async (
 
     };
 
-export {createUser};
+    const loginUser = async (
+        req: Request, 
+        res: Response, 
+        next: NextFunction
+        ) => {
+            const {email, password} = req.body;
+
+            if(!email || !password){
+                return next(createHttpError(400,"All fields are required"));
+            }
+
+            //handle errors
+            const user = await userModel.findOne({email: email});
+            
+            if(!user)
+                return next(createHttpError(404, "User not found"));
+                
+        
+            
+            //match email and password with db 
+            const isMatch = await bcrypt.compare(password, user.password);
+            if(!isMatch)
+                return next(createHttpError(400, "Username or password incorrect"));
+            
+            //if it matches, generate new access token
+            const token = sign({sub: user._id}, config.jwtSecret as string, {
+                expiresIn: '7d',
+                algorithm: 'HS256',
+            });
+            
+
+            res.json({accessToken: token});
+        };
+    
+export {createUser, loginUser};
