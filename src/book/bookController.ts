@@ -5,6 +5,7 @@ import createHttpError from 'http-errors';
 import bookModel from './bookModel';
 import fs from 'node:fs';
 import { isGeneratorObject } from 'node:util/types';
+import { AuthRequest } from '../middlewares/authenticate';
 
 const createBook = async (
     req: Request, 
@@ -43,17 +44,19 @@ const createBook = async (
             format: "pdf",
         });
     
-        console.log("bookFileUploadResult", bookFileUploadResult);
+    //     console.log("bookFileUploadResult", bookFileUploadResult);
     
-        console.log("uploadResult", uploadResult);
+    //     console.log("uploadResult", uploadResult);
 
-       // @ts-ignore
-        console.log("userId", req.userId);
+    //    // @ts-ignore
+    //     console.log("userId", req.userId);
+
+        const _req = req as AuthRequest;
 
         const newBook = await bookModel.create({
             title,
             genre,
-            author : "663eacb637e23ab817665ae5",
+            author : _req.userId,
             coverImage : uploadResult.secure_url,
             file: uploadResult.secure_url,
 

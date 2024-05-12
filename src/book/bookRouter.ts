@@ -15,7 +15,7 @@ const upload = multer({
 // routes
 
 //  api/books/
-// / -> authenticate (in the end next()) -> middleware of multer -> main req handler (next())
+// / -> authenticate (in the end next()) -> middleware of multer -> main req handler (next() 
 bookRouter.post(
     '/', 
     authenticate,
@@ -23,8 +23,7 @@ upload.fields([
     {name: "coverImage", maxCount: 1},
     {name: "file", maxCount: 1},
 ]), 
-createBook
-);
+createBook);
 
 
 export default bookRouter;
