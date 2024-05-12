@@ -1,5 +1,5 @@
 import express from 'express'
-import { createBook, listBooks, updateBook } from "./bookController"
+import { createBook, getSingleBook, listBooks, updateBook } from "./bookController"
 import multer from "multer"
 import path from 'node:path';
 import authenticate from '../middlewares/authenticate';
@@ -34,8 +34,9 @@ upload.fields([
 ]), 
 updateBook);
 
-bookRouter.get('/', listBooks);   //this is going to be public (not authenticated)
+bookRouter.get("/", listBooks); //this is going to be public (not authenticated)
 
+bookRouter.get("/:bookId", getSingleBook); //dynamic segment bookId to get a single book
 
 
 
