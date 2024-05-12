@@ -4,6 +4,7 @@ import path from 'node:path';
 import createHttpError from 'http-errors';
 import bookModel from './bookModel';
 import fs from 'node:fs';
+import { isGeneratorObject } from 'node:util/types';
 
 const createBook = async (
     req: Request, 
@@ -45,6 +46,9 @@ const createBook = async (
         console.log("bookFileUploadResult", bookFileUploadResult);
     
         console.log("uploadResult", uploadResult);
+
+       // @ts-ignore
+        console.log("userId", req.userId);
 
         const newBook = await bookModel.create({
             title,
