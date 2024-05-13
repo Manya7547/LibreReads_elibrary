@@ -40,7 +40,7 @@ const createBook = async (
         const bookFileUploadResult = await cloudinary.uploader.upload(bookFilePath,{
             resource_type: 'raw', 
             filename_override: bookFileName,
-            folder: "books-pdfs",
+            folder: "book-pdfs",
             format: "pdf",
         });
     
@@ -58,7 +58,7 @@ const createBook = async (
             genre,
             author : _req.userId,
             coverImage : uploadResult.secure_url,
-            file: uploadResult.secure_url,
+            file: bookFileUploadResult.secure_url,
 
         })
 
@@ -234,10 +234,16 @@ const deleteBook = async (
         bookFileSplits.at(-2) + "/" + bookFileSplits.at(-1);
     console.log("bookFilePublicId", bookFilePublicId);
     // todo: add try error block
-    await cloudinary.uploader.destroy(coverImagePublicId);
-    await cloudinary.uploader.destroy(bookFilePublicId, {
-        resource_type: "raw",
-    });
+
+    try {
+        await cloudinary.uploader.destroy(coverImagePublicId);
+        await cloudinary.uploader.destroy(bookFilePublicId, {
+            resource_type: "raw",
+        });
+    } catch (error) {
+        console.error("Error deleting files from Cloudinary:", error);
+        return next(createHttpError(500, "Error deleting files from Cloudinary"));
+    }
 
     await bookModel.deleteOne({ _id: bookId });
 
