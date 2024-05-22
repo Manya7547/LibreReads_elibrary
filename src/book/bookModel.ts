@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { userInfo } from 'node:os';
 import { Book } from './bookType'
 
 const bookSchema = new mongoose.Schema<Book>({
@@ -6,8 +7,13 @@ const bookSchema = new mongoose.Schema<Book>({
         type: String,
         requred: true,
     },
+    description: {
+        type: String,
+        require: true,
+    },
     author: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
     },
     coverImage: {
