@@ -3,6 +3,7 @@ import cloudinary from './cloudinary';
 
 conf();
 
+// private 
 const _config = {
     port : process.env.PORT,
 
@@ -21,4 +22,5 @@ const _config = {
     frontendDomain: process.env.FRONTEND_DOMAIN
 }
 
+// freeze - ready only 
 export const config = Object.freeze(_config);
