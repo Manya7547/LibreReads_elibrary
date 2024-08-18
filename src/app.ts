@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import cors from "cors"; 
 import globalErrorHandler from "./middlewares/globalErrorHandler";
 import userRouter from "./user/userRouter";
@@ -28,7 +28,9 @@ app.get("/", (req, res, next) => {
 app.use("/api/users", userRouter);
 app.use("/api/books", bookRouter);
 
-// Global error handler
+// Global error handler - middleware 
+// It should be written at the end after all the routes. 
+// If there is an error - the request is passed to global error handler 
 app.use(globalErrorHandler);
 
 export default app;
