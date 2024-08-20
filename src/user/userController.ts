@@ -1,4 +1,4 @@
-import { Express, Request, Response, NextFunction } from "express"
+import { Request, Response, NextFunction } from "express"
 import createHttpError from "http-errors";
 import userModel from "./userModel";
 import bcrypt from 'bcrypt';
@@ -7,7 +7,9 @@ import { config } from "../config/config";
 import { User } from "./userTypes";
 
 
-const createUser =async (
+// request handlers for Users
+
+const createUser = async (
     req: Request, 
     res: Response, 
     next: NextFunction
@@ -24,8 +26,10 @@ const createUser =async (
         //database call 
 
         try {
+            // findOne - if email posted == email in DB
             const user = await userModel.findOne({email: email});
             if(user){
+                // user already present 
                 const error = createHttpError(400, "user already exists with this email");
                 return next(error);
             }
