@@ -2,6 +2,11 @@
 
 A comprehensive electronic library management system for organizing, managing, and accessing digital resources.
 
+### LibreReads Homepage
+
+![LibreReads Homepage](./screenshots/elib.png)
+_Homepage of the LibreReads digital library platform_
+
 ## Project Components
 
 This project consists of three main components:
